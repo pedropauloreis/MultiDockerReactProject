@@ -11,24 +11,15 @@ script:
   - docker run -e CI=true ppreis/multi-docker-react-client-test npm run test
 
 after_sucess:
-  - docker build -t ppreis/multi-docker-react-client ./client
-    if: branch = master
-  - docker build -t ppreis/multi-docker-react-api ./api
-    if: branch = master
-  - docker build -t ppreis/multi-docker-react-worker ./worker
-    if: branch = master
-  - docker build -t ppreis/multi-docker-react-nginx ./nginx
-    if: branch = master
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    if: branch = master
-  - docker push ppreis/multi-docker-react-client
-    if: branch = master
-  - docker push ppreis/multi-docker-react-api
-    if: branch = master
-  - docker push ppreis/multi-docker-react-worker
-    if: branch = master
-  - docker push ppreis/multi-docker-react-nginx
-    if: branch = master
+  - test $TRAVIS_BRANCH = "master" && docker build -t ppreis/multi-docker-react-client ./client
+  - test $TRAVIS_BRANCH = "master" && docker build -t ppreis/multi-docker-react-api ./api
+  - test $TRAVIS_BRANCH = "master" && docker build -t ppreis/multi-docker-react-worker ./worker
+  - test $TRAVIS_BRANCH = "master" && docker build -t ppreis/multi-docker-react-nginx ./nginx
+  - test $TRAVIS_BRANCH = "master" && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - test $TRAVIS_BRANCH = "master" && docker push ppreis/multi-docker-react-client
+  - test $TRAVIS_BRANCH = "master" && docker push ppreis/multi-docker-react-api
+  - test $TRAVIS_BRANCH = "master" && docker push ppreis/multi-docker-react-worker
+  - test $TRAVIS_BRANCH = "master" && docker push ppreis/multi-docker-react-nginx
   
 
 deploy:
