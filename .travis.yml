@@ -12,15 +12,24 @@ script:
 
 after_sucess:
   - docker build -t ppreis/multi-docker-react-client ./client
+    if: branch = master
   - docker build -t ppreis/multi-docker-react-api ./api
+    if: branch = master
   - docker build -t ppreis/multi-docker-react-worker ./worker
+    if: branch = master
   - docker build -t ppreis/multi-docker-react-nginx ./nginx
+    if: branch = master
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    if: branch = master
   - docker push ppreis/multi-docker-react-client
+    if: branch = master
   - docker push ppreis/multi-docker-react-api
+    if: branch = master
   - docker push ppreis/multi-docker-react-worker
+    if: branch = master
   - docker push ppreis/multi-docker-react-nginx
-  if: branch = master
+    if: branch = master
+  
 
 deploy:
   provider: elasticbeanstalk
