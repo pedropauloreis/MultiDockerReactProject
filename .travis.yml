@@ -11,19 +11,16 @@ script:
   - docker run -e CI=true ppreis/multi-docker-react-client-test npm run test
 
 after_sucess:
-  if: branch = master
   - docker build -t ppreis/multi-docker-react-client ./client
   - docker build -t ppreis/multi-docker-react-api ./api
   - docker build -t ppreis/multi-docker-react-worker ./worker
   - docker build -t ppreis/multi-docker-react-nginx ./nginx
-  
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  
   - docker push ppreis/multi-docker-react-client
   - docker push ppreis/multi-docker-react-api
   - docker push ppreis/multi-docker-react-worker
   - docker push ppreis/multi-docker-react-nginx
-
+  if: branch = master
 
 deploy:
   provider: elasticbeanstalk
