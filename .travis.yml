@@ -16,7 +16,7 @@ after_sucess:
   - docker build -t ppreis/multi-docker-react-worker ./worker
   - docker build -t ppreis/multi-docker-react-nginx ./nginx
   
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password_stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   
   - docker push ppreis/multi-docker-react-client
   - docker push ppreis/multi-docker-react-api
