@@ -11,8 +11,7 @@ script:
   - docker run -e CI=true ppreis/multi-docker-react-client-test npm run test
 
 after_sucess:
-  on:
-    branch: master
+  if: branch = master
   - docker build -t ppreis/multi-docker-react-client ./client
   - docker build -t ppreis/multi-docker-react-api ./api
   - docker build -t ppreis/multi-docker-react-worker ./worker
